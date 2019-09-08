@@ -21,7 +21,7 @@ describe('Acme TDD', ()=>{
       expect(seed.deps[2].name).to.equal('Marketing');
     })
   });
-  describe('API', ()=>{
+  describe('API for users', ()=>{
     describe('GET /api/users', ()=>{
       it('returns the users',()=>{
         return app.get('/api/users')
@@ -39,6 +39,60 @@ describe('Acme TDD', ()=>{
           })
       })
     });
-    describe
+    describe('DELTE /api/users', ()=>{
+      it('delete a user', ()=>{
+        // console.log('users id: ',seed.users[0].dataValues.id)
+        return app.delete(`/api/users/${seed.users[0].dataValues.id}`)
+          .expect(204)
+      })
+    });
+    describe('PUT /api/users', ()=>{
+      it('update a user name', ()=>{
+        return app.put(`/api/users/${seed.users[0].dataValues.id}`)
+        .send({name: 'Mark'})
+          .expect(200)
+          .then( res => {
+            expect(res.body.name).to.equal('Mark')
+          })
+      })
+    });
+
+  })
+  describe('API for departments', ()=>{
+    describe('GET /api/departments', ()=>{
+      it('returns the departments',()=>{
+        return app.get('/api/departments')
+        .expect(200)
+      })
+    });
+    describe('POST /api/departments', ()=>{
+      it('creates a new user', ()=>{
+      const id = seed.deps[0].dataValues.id
+        return app.post('/api/departments')
+          .send({name:'name'})
+          .expect(200)
+          .then(response=>{
+            expect(response.body.name).to.equal('name');
+          })
+      })
+    });
+    describe('DELTE /api/departments', ()=>{
+      it('delete a department', ()=>{
+        // console.log('departments id: ',seed.deps)
+        return app.delete(`/api/departments/${seed.deps[0].dataValues.id}`)
+          .expect(204)
+      })
+    });
+    describe('PUT /api/departments', ()=>{
+      it('update a user name', ()=>{
+        return app.put(`/api/departments/${seed.deps[0].dataValues.id}`)
+        .send({name: 'Mark'})
+          .expect(200)
+          .then( res => {
+            expect(res.body.name).to.equal('Mark')
+          })
+      })
+    });
+
   })
 })
