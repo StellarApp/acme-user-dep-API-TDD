@@ -19,6 +19,8 @@
   "homepage": "https://github.com/StellarApp/acme-user-dep-API-TDD#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "faker": "^4.1.0",
+    "nodemon": "^1.19.2",
     "pg": "^7.12.1",
     "sequelize": "^5.18.4"
   }
