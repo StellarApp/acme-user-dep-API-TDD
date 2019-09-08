@@ -1,29 +1,36 @@
 const express = require("express");
 const app = express();
-const PORT = 3000;
+// const PORT = process.env.PORT || 5000;
 const db = require("./db");
 const { User, Department } = db.models;
 
 // app.use("/api", require("./api"));
+app.use(express.json())
 
-app.get("/api/users", async (req, res, next) => {
-  try {
-    await res.send(User.findAll());
-  } catch (ex) {
-    next(ex);
-  }
-});
+app.get("/api/users", (req,res,next) =>{
+  User.findAll()
+    .then(users => res.send(users))
+    .catch(next)
+})
 
-app.get("/api/departments", async (req, res, next) => {
-    try {
-      await res.send(Department.findAll());
-    } catch (ex) {
-      next(ex);
-    }
-  });
+app.post('/api/users', (req,res,next)=>{
+  User.create(req.body)
+    .then(item => res.send(item))
+    .catch(next)
+})
 
-db.syncAndSeed().then(
-  app.listen(PORT, () => {
-    console.log(`listening port ${PORT}`);
-  })
-);
+// app.get("/api/departments", async (req, res, next) => {
+//     try {
+//       await res.send(Department.findAll());
+//     } catch (ex) {
+//       next(ex);
+//     }
+//   });
+
+// db.syncAndSeed().then(
+//   app.listen(PORT, () => {
+//     console.log(`listening port ${PORT}`);
+//   })
+// );
+
+module.exports = app;
